@@ -59,11 +59,54 @@
   box-shadow: 0 10px 24px rgba(29, 33, 41, 0.05);
 }
 
-.feature-grid {
+.auth-form {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
+}
+
+.form-field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.form-field label {
+  font-weight: 600;
+}
+
+.form-field input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid #cfc8ba;
+  border-radius: 0.6rem;
+  background: #fbfaf7;
+}
+
+.form-field input:focus {
+  outline: 2px solid #f5d28d;
+  border-color: #b7a58d;
+}
+
+.field-error {
+  color: #a02b2b;
+  font-size: 0.95rem;
+}
+
+.status-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.7rem;
+  background: #f1f1f1;
+}
+
+.status-message.success {
+  background: #ddf7e6;
+  color: #1d5d39;
+}
+
+.status-message.error {
+  background: #fce8e8;
+  color: #791d1d;
 }
 
 .page-card button {
@@ -80,6 +123,13 @@
 .page-card button:disabled {
   opacity: 0.65;
   cursor: not-allowed;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 .site-footer {
