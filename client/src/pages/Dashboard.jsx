@@ -1,41 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const { user, loading, isAuthenticated } = useAuth();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
+    if (!loading && !isAuthenticated()) {
       navigate('/login');
-      return;
     }
-
-    (async () => {
-      try {
-        const res = await fetch('/api/users/me', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!res.ok) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          navigate('/login');
-          return;
-        }
-
-        const data = await res.json();
-        setUser(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [navigate]);
+  }, [loading, isAuthenticated, navigate]);
 
   if (loading) return <section className="page-card"><h1>Loading dashboard…</h1></section>;
 
@@ -47,8 +22,6 @@ export default function Dashboard() {
           Welcome back, <strong>{user.name}</strong> — <em>{user.email}</em>
         </p>
       )}
-
-      {error && <div className="status-message error">{error}</div>}
 
       <div className="feature-grid">
         <article>
