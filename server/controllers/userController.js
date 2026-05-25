@@ -29,7 +29,11 @@ exports.registerUser = async (req, res) => {
 
     });
 
-    res.status(201).json(user);
+    res.status(201).json({
+      id: user._id,
+      name: user.name,
+      email: user.email
+    });
 
   }
 
