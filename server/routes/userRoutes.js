@@ -9,6 +9,8 @@ const {
   updateUser,
   deleteUser
 } = require("../controllers/userController");
+const { loginUser, getCurrentUser } = require("../controllers/userController");
+const protect = require("../middleware/authMiddleware");
 
 
 router.get("/status", (req, res) => {
@@ -16,6 +18,9 @@ router.get("/status", (req, res) => {
 });
 
 router.post("/register", registerUser);
+router.post("/login", loginUser);
+
+router.get("/me", protect, getCurrentUser);
 
 router.get("/", getUsers);
 
