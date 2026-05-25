@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 
 // REGISTER
@@ -155,4 +156,53 @@ exports.deleteUser = async (req, res) => {
 
   }
 
+};
+
+
+// LOGIN
+exports.loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const payload = { id: user._id, name: user.name, email: user.email };
+
+    const token = jwt.sign(payload, process.env.JWT_SECRET || "devsecret", {
+      expiresIn: "1h",
+    });
+
+    res.json({ token, user: payload });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+// GET CURRENT USER (protected)
+exports.getCurrentUser = async (req, res) => {
+  try {
+    // `req.user` is set by the auth middleware
+    if (!req.user) return res.status(401).json({ message: "Unauthorized" });
+
+    const user = await User.findById(req.user.id).select("-password");
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
