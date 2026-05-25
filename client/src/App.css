@@ -1,0 +1,72 @@
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f9f7f1;
+  color: #2c2a3a;
+}
+
+.site-header,
+.site-footer {
+  background: #2f4f4f;
+  color: #f7f5f1;
+}
+
+.site-header {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand a {
+  color: #f7f5f1;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.site-nav a {
+  color: #dbe2e8;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.site-nav a.active {
+  color: #fff;
+  border-bottom: 2px solid #f5d28d;
+}
+
+.app-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1080px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.page-card {
+  background: #ffffff;
+  border: 1px solid #d7d3c3;
+  border-radius: 0.8rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 24px rgba(29, 33, 41, 0.05);
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.site-footer {
+  padding: 1rem 2rem;
+  text-align: center;
+}
