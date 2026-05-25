@@ -66,6 +66,22 @@
   margin-top: 1.5rem;
 }
 
+.page-card button {
+  appearance: none;
+  border: none;
+  border-radius: 0.6rem;
+  padding: 0.8rem 1.2rem;
+  background: #2f4f4f;
+  color: #f7f5f1;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.page-card button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
 .site-footer {
   padding: 1rem 2rem;
   text-align: center;
