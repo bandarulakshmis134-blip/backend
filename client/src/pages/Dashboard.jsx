@@ -1,18 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-  const { user, loading, isAuthenticated } = useAuth();
-
-  useEffect(() => {
-    if (!loading && !isAuthenticated()) {
-      navigate('/login');
-    }
-  }, [loading, isAuthenticated, navigate]);
-
-  if (loading) return <section className="page-card"><h1>Loading dashboard…</h1></section>;
+  const { user } = useAuth();
 
   return (
     <section className="page-card">
