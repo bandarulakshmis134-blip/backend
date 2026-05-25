@@ -11,5 +11,7 @@ export default function NotFound() {
         Return <Link to="/">home</Link> to see the main landing page.
       </p>
     </section>
+
+    
   );
 }
