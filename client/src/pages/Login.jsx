@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const initialState = { email: '', password: '' };
 
@@ -8,6 +9,7 @@ export default function Login() {
   const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const validate = () => {
     const errs = {};
@@ -35,30 +37,13 @@ export default function Login() {
     setMessage('Signing in...');
 
     try {
-      const res = await fetch('/api/users/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: formData.email.trim(), password: formData.password }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setStatus('error');
-        setMessage(data.message || 'Login failed');
-        return;
-      }
-
-      // persist token and user
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-
+      await login(formData.email.trim(), formData.password);
       setStatus('success');
       setMessage('Login successful — redirecting...');
       navigate('/dashboard');
     } catch (error) {
       setStatus('error');
-      setMessage(`Request failed: ${error.message}`);
+      setMessage(error.message || 'Request failed');
     }
   };
 

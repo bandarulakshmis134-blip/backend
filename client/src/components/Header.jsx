@@ -1,21 +1,8 @@
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export function Header() {
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const raw = localStorage.getItem('user');
-    if (raw) setUser(JSON.parse(raw));
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setUser(null);
-    navigate('/login');
-  };
+  const { user, logout, isAuthenticated } = useAuth();
 
   return (
     <header className="site-header">
@@ -27,10 +14,10 @@ export function Header() {
           Home
         </NavLink>
         <NavLink to="/dashboard">Dashboard</NavLink>
-        {user ? (
+        {isAuthenticated() ? (
           <>
-            <span className="nav-user">{user.name}</span>
-            <button className="nav-logout" onClick={handleLogout}>Logout</button>
+            <span className="nav-user">{user?.name}</span>
+            <button className="nav-logout" onClick={logout}>Logout</button>
           </>
         ) : (
           <>
